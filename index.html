@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe - MERN Stack Developer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',
+                        secondary: '#8B5CF6',
+                        accent: '#EC4899',
+                        dark: {
+                            bg: '#0a0e27',
+                            card: '#1a1f3a',
+                            lighter: '#252b4a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+            to { box-shadow: 0 0 30px rgba(99, 102, 241, 0.8), 0 0 40px rgba(139, 92, 246, 0.6); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glass Morphism */
+        .glass {
+            background: rgba(26, 31, 58, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Gradient Border */
+        .gradient-border {
+            position: relative;
+            background: #1a1f3a;
+            border-radius: 1rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6, #EC4899);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366F1, #8B5CF6);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #8B5CF6, #EC4899);
+        }
+        
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid #6366F1;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #6366F1 }
+        }
+        
+        /* Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366F1, #8B5CF6, #EC4899);
+            z-index: 9999;
+            transform-origin: left;
+        }
+        
+        /* Navigation */
+        nav {
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        /* Smooth Reveal on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-dark-bg text-gray-100 font-sans overflow-x-hidden">
+    
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 px-6 py-4" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-display font-bold gradient-text">
+                &lt;JD/&gt;
+            </a>
+            
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex space-x-8 items-center">
+                <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                <li><a href="#projects" class="hover:text-primary transition-colors">Projects</a></li>
+                <li><a href="#skills" class="hover:text-primary transition-colors">Skills</a></li>
+                <li><a href="#experience" class="hover:text-primary transition-colors">Experience</a></li>
+                <li><a href="#contact" class="hover:text-primary transition-colors">Contact</a></li>
+                <li>
+                    <a href="#contact" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full hover:shadow-lg hover:shadow-primary/50 transition-all">
+                        Hire Me
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-dark-card shadow-2xl md:hidden" id="mobileMenu">
+            <div class="p-6">
+                <button class="text-2xl mb-8 float-right" id="closeMobileMenu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul class="space-y-6 clear-both pt-8">
+                    <li><a href="#home" class="block hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="#projects" class="block hover:text-primary transition-colors">Projects</a></li>
+                    <li><a href="#skills" class="block hover:text-primary transition-colors">Skills</a></li>
+                    <li><a href="#experience" class="block hover:text-primary transition-colors">Experience</a></li>
+                    <li><a href="#contact" class="block hover:text-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Particles Background -->
+        <div class="particles" id="particles"></div>
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-bg via-dark-card to-dark-bg opacity-90"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="animate-fade-in">
+                <h1 class="text-5xl md:text-7xl font-display font-bold mb-4">
+                    Hi, I'm <span class="gradient-text">John Doe</span> 👋
+                </h1>
+                <div class="text-2xl md:text-4xl font-semibold mb-6 h-12">
+                    <span class="gradient-text typewriter-container">
+                        <span id="typewriter">MERN Stack Developer</span>
+                    </span>
+                </div>
+                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Crafting scalable web applications with MongoDB, Express, React, and Node.js. 
+                    Turning ideas into elegant solutions.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center mb-12">
+                    <a href="#projects" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full font-semibold hover:shadow-xl hover:shadow-primary/50 transition-all transform hover:scale-105">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="px-8 py-4 glass rounded-full font-semibold hover:bg-dark-lighter transition-all">
+                        Let's Talk
+                    </a>
+                </div>
+                
+                <!-- Floating Code Snippets -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
+                    <div class="glass p-4 rounded-lg animate-float font-mono text-sm text-left" style="animation-delay: 0s;">
+                        <div class="text-green-400">// MongoDB Query</div>
+                        <div class="text-gray-300">db.users.find()</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg animate-float font-mono text-sm text-left" style="animation-delay: 1s;">
+                        <div class="text-blue-400">// React Component</div>
+                        <div class="text-gray-300">&lt;App /&gt;</div>
+                    </div>
+                    <div class="glass p-4 rounded-lg animate-float font-mono text-sm text-left" style="animation-delay: 2s;">
+                        <div class="text-yellow-400">// Node.js Server</div>
+                        <div class="text-gray-300">app.listen(3000)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <a href="#tech-stack">
+                <i class="fas fa-chevron-down text-3xl text-primary"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Tech Stack Section -->
+    <section id="tech-stack" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Technologies I <span class="gradient-text">Master</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Building modern applications with cutting-edge tools</p>
+            </div>
+            
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 reveal">
+                <!-- MongoDB -->
+                <div class="gradient-border p-6 card-hover cursor-pointer">
+                    <div class="text-center">
+                        <i class="fas fa-database text-6xl mb-4" style="color: #47A248;"></i>
+                        <h3 class="text-xl font-bold mb-2">MongoDB</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mt-4">
+                            <div class="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">90% Proficiency</p>
+                    </div>
+                </div>
+                
+                <!-- Express -->
+                <div class="gradient-border p-6 card-hover cursor-pointer">
+                    <div class="text-center">
+                        <i class="fas fa-server text-6xl mb-4 text-white"></i>
+                        <h3 class="text-xl font-bold mb-2">Express.js</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mt-4">
+                            <div class="bg-gradient-to-r from-gray-400 to-gray-600 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">85% Proficiency</p>
+                    </div>
+                </div>
+                
+                <!-- React -->
+                <div class="gradient-border p-6 card-hover cursor-pointer md:col-span-2">
+                    <div class="text-center">
+                        <i class="fab fa-react text-8xl mb-4" style="color: #61DAFB;"></i>
+                        <h3 class="text-2xl font-bold mb-2">React.js</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mt-4 max-w-md mx-auto">
+                            <div class="bg-gradient-to-r from-cyan-400 to-blue-600 h-2 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">95% Proficiency</p>
+                    </div>
+                </div>
+                
+                <!-- Node.js -->
+                <div class="gradient-border p-6 card-hover cursor-pointer md:col-span-2">
+                    <div class="text-center">
+                        <i class="fab fa-node-js text-8xl mb-4" style="color: #339933;"></i>
+                        <h3 class="text-2xl font-bold mb-2">Node.js</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mt-4 max-w-md mx-auto">
+                            <div class="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full" style="width: 92%"></div>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">92% Proficiency</p>
+                    </div>
+                </div>
+                
+                <!-- Additional Tools -->
+                <div class="gradient-border p-6 card-hover cursor-pointer md:col-span-2">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold mb-4">Plus More Tools</h3>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                <i class="fab fa-git-alt text-orange-500"></i> Git
+                            </span>
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                <i class="fab fa-docker text-blue-400"></i> Docker
+                            </span>
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                <i class="fab fa-aws text-yellow-500"></i> AWS
+                            </span>
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                Redux
+                            </span>
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                Tailwind
+                            </span>
+                            <span class="px-3 py-1 bg-dark-lighter rounded-full text-sm border border-primary/30">
+                                TypeScript
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Some of my recent work that I'm proud of</p>
+            </div>
+            
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop" 
+                             alt="E-Commerce Platform" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded-full">Live</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">E-Commerce Platform</h3>
+                        <p class="text-gray-400 mb-4">Full-stack shopping platform with payment integration, real-time inventory, and admin dashboard.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> React
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fab fa-node-js text-green-500"></i> Node.js
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Stripe</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=500&fit=crop" 
+                             alt="Real-Time Chat App" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded-full">Live</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Real-Time Chat Application</h3>
+                        <p class="text-gray-400 mb-4">WebSocket-powered chat app with rooms, file sharing, typing indicators, and message encryption.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> React
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Socket.io</span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Redis</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop" 
+                             alt="Task Management System" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-yellow-500 text-dark-bg text-xs rounded-full">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Project Management Tool</h3>
+                        <p class="text-gray-400 mb-4">Kanban-style project management with drag-and-drop, team collaboration, and analytics dashboard.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> Next.js
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">TypeScript</span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Chart.js</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop" 
+                             alt="Blog Platform" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded-full">Live</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Blogging Platform</h3>
+                        <p class="text-gray-400 mb-4">Medium-like blogging platform with markdown editor, comments, likes, and SEO optimization.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> React
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Express</span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">JWT</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" 
+                             alt="Analytics Dashboard" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded-full">Live</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Analytics Dashboard</h3>
+                        <p class="text-gray-400 mb-4">Business intelligence dashboard with real-time data visualization and custom reports.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> React
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">D3.js</span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">GraphQL</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="gradient-border card-hover reveal group">
+                    <div class="relative overflow-hidden rounded-t-lg">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop" 
+                             alt="Social Media App" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-60"></div>
+                        <div class="absolute top-4 right-4">
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs rounded-full">Live</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">Social Network App</h3>
+                        <p class="text-gray-400 mb-4">Full-featured social platform with posts, stories, messaging, and friend connections.</p>
+                        
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-green-500/30">
+                                <i class="fas fa-database text-green-500"></i> MongoDB
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs border border-blue-500/30">
+                                <i class="fab fa-react text-blue-400"></i> React Native
+                            </span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">Socket.io</span>
+                            <span class="px-2 py-1 bg-dark-bg rounded text-xs">AWS S3</span>
+                        </div>
+                        
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="#" class="flex-1 text-center px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="px-4 py-2 glass hover:bg-dark-lighter rounded-lg transition-colors">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- View All Projects Button -->
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block px-8 py-4 glass hover:bg-dark-lighter rounded-full font-semibold transition-all">
+                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Skills & <span class="gradient-text">Expertise</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Comprehensive skill set across the development stack</p>
+            </div>
+            
+            <!-- Skills Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Frontend Skills -->
+                <div class="glass p-8 rounded-2xl card-hover reveal">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-palette text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Frontend</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-react text-cyan-400 mr-2"></i> React.js</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-js text-yellow-400 mr-2"></i> JavaScript/ES6+</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-css3-alt text-blue-400 mr-2"></i> CSS/Tailwind</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-code text-blue-500 mr-2"></i> TypeScript</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-html5 text-orange-500 mr-2"></i> HTML5</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-mobile-alt text-purple-400 mr-2"></i> Responsive Design</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Backend Skills -->
+                <div class="glass p-8 rounded-2xl card-hover reveal">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-server text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Backend</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-node-js text-green-500 mr-2"></i> Node.js</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-server text-gray-400 mr-2"></i> Express.js</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-database text-green-400 mr-2"></i> MongoDB</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-database text-blue-400 mr-2"></i> PostgreSQL</span>
+                            <span class="text-sm text-gray-400">Intermediate</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-lock text-yellow-400 mr-2"></i> JWT/Auth</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-project-diagram text-purple-400 mr-2"></i> GraphQL</span>
+                            <span class="text-sm text-gray-400">Intermediate</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Tools & DevOps -->
+                <div class="glass p-8 rounded-2xl card-hover reveal">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tools text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Tools & DevOps</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-git-alt text-orange-500 mr-2"></i> Git/GitHub</span>
+                            <span class="text-sm text-gray-400">Expert</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-docker text-blue-400 mr-2"></i> Docker</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fab fa-aws text-yellow-500 mr-2"></i> AWS</span>
+                            <span class="text-sm text-gray-400">Intermediate</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-infinity text-purple-400 mr-2"></i> CI/CD</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-terminal text-green-400 mr-2"></i> Linux/Bash</span>
+                            <span class="text-sm text-gray-400">Advanced</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span><i class="fas fa-chart-line text-cyan-400 mr-2"></i> Testing (Jest)</span>
+                            <span class="text-sm text-gray-400">Intermediate</span>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-20 px-6 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Professional <span class="gradient-text">Journey</span>
+                </h2>
+                <p class="text-gray-400 text-lg">My career path and experiences</p>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-secondary to-accent"></div>
+                
+                <!-- Timeline Items -->
+                <div class="space-y-12">
+                    
+                    <!-- Experience 1 -->
+                    <div class="relative reveal">
+                        <div class="flex items-center mb-4 md:justify-center">
+                            <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-dark-bg z-10"></div>
+                        </div>
+                        <div class="ml-20 md:ml-0 md:w-1/2 md:ml-auto md:pl-12">
+                            <div class="glass p-6 rounded-xl card-hover">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full">2023 - Present</span>
+                                    <span class="text-green-400 text-sm">Current</span>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-2">Senior MERN Developer</h3>
+                                <h4 class="text-lg text-primary mb-3">TechCorp Inc.</h4>
+                                <p class="text-gray-400 mb-4">Leading development of enterprise-level web applications using MERN stack. Mentoring junior developers and implementing best practices.</p>
+                                <ul class="space-y-2 text-sm text-gray-300">
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Architected microservices handling 1M+ daily users</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Reduced API response time by 60%</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Led team of 5 developers</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 2 -->
+                    <div class="relative reveal">
+                        <div class="flex items-center mb-4 md:justify-center">
+                            <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-6 h-6 bg-secondary rounded-full border-4 border-dark-bg z-10"></div>
+                        </div>
+                        <div class="ml-20 md:ml-0 md:w-1/2 md:pr-12">
+                            <div class="glass p-6 rounded-xl card-hover">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="px-3 py-1 bg-secondary/20 text-secondary text-sm rounded-full">2021 - 2023</span>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-2">Full Stack Developer</h3>
+                                <h4 class="text-lg text-secondary mb-3">StartupXYZ</h4>
+                                <p class="text-gray-400 mb-4">Developed and maintained multiple client projects using React, Node.js, and MongoDB. Collaborated with design team for optimal UX.</p>
+                                <ul class="space-y-2 text-sm text-gray-300">
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Built 10+ production applications</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Implemented CI/CD pipelines</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Improved code coverage to 85%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 3 -->
+                    <div class="relative reveal">
+                        <div class="flex items-center mb-4 md:justify-center">
+                            <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-6 h-6 bg-accent rounded-full border-4 border-dark-bg z-10"></div>
+                        </div>
+                        <div class="ml-20 md:ml-0 md:w-1/2 md:ml-auto md:pl-12">
+                            <div class="glass p-6 rounded-xl card-hover">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="px-3 py-1 bg-accent/20 text-accent text-sm rounded-full">2020 - 2021</span>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-2">Junior Developer</h3>
+                                <h4 class="text-lg text-accent mb-3">WebAgency Pro</h4>
+                                <p class="text-gray-400 mb-4">Started my professional journey building responsive websites and learning full-stack development fundamentals.</p>
+                                <ul class="space-y-2 text-sm text-gray-300">
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Converted designs to responsive code</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Collaborated with senior developers</li>
+                                    <li><i class="fas fa-check text-green-400 mr-2"></i>Learned MERN stack fundamentals</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- GitHub Stats Section -->
+    <section id="github" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    <span class="gradient-text">&lt;MyCode/&gt;</span>
+                </h2>
+                <p class="text-gray-400 text-lg">My contributions and code statistics</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                
+                <!-- GitHub Stats Card -->
+                <div class="gradient-border p-6 card-hover reveal text-center">
+                    <i class="fab fa-github text-6xl mb-4 text-white"></i>
+                    <h3 class="text-4xl font-bold gradient-text mb-2">500+</h3>
+                    <p class="text-gray-400">Contributions This Year</p>
+                </div>
+                
+                <!-- Repositories -->
+                <div class="gradient-border p-6 card-hover reveal text-center">
+                    <i class="fas fa-code-branch text-6xl mb-4 text-primary"></i>
+                    <h3 class="text-4xl font-bold gradient-text mb-2">45</h3>
+                    <p class="text-gray-400">Public Repositories</p>
+                </div>
+                
+                <!-- Stars -->
+                <div class="gradient-border p-6 card-hover reveal text-center">
+                    <i class="fas fa-star text-6xl mb-4 text-yellow-400"></i>
+                    <h3 class="text-4xl font-bold gradient-text mb-2">234</h3>
+                    <p class="text-gray-400">Total Stars Received</p>
+                </div>
+                
+            </div>
+            
+            <!-- Code Snippet Showcase -->
+            <div class="glass p-8 rounded-2xl reveal">
+                <h3 class="text-2xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-code mr-3 text-primary"></i>
+                    Clean Code I'm Proud Of
+                </h3>
+                
+                <!-- Code Snippet -->
+                <div class="code-block font-mono text-sm">
+<pre class="text-gray-300"><span class="text-purple-400">// Express.js REST API with Error Handling</span>
+<span class="text-blue-400">const</span> <span class="text-yellow-300">express</span> = <span class="text-blue-400">require</span>(<span class="text-green-400">'express'</span>);
+<span class="text-blue-400">const</span> <span class="text-yellow-300">router</span> = express.<span class="text-yellow-300">Router</span>();
+
+<span class="text-purple-400">// Async handler wrapper</span>
+<span class="text-blue-400">const</span> <span class="text-yellow-300">asyncHandler</span> = <span class="text-gray-400">fn</span> => (<span class="text-gray-400">req, res, next</span>) => {
+  Promise.<span class="text-yellow-300">resolve</span>(<span class="text-yellow-300">fn</span>(req, res, next)).<span class="text-yellow-300">catch</span>(next);
+};
+
+<span class="text-purple-400">// Get user profile</span>
+router.<span class="text-yellow-300">get</span>(<span class="text-green-400">'/profile/:id'</span>, <span class="text-yellow-300">asyncHandler</span>(<span class="text-blue-400">async</span> (req, res) => {
+  <span class="text-blue-400">const</span> user = <span class="text-blue-400">await</span> User.<span class="text-yellow-300">findById</span>(req.params.id);
+  
+  <span class="text-purple-400">if</span> (!user) {
+    <span class="text-purple-400">return</span> res.<span class="text-yellow-300">status</span>(<span class="text-orange-400">404</span>).<span class="text-yellow-300">json</span>({ message: <span class="text-green-400">'User not found'</span> });
+  }
+  
+  res.<span class="text-yellow-300">json</span>({ success: <span class="text-orange-400">true</span>, data: user });
+}));</pre>
+                </div>
+                
+                <button class="mt-4 px-4 py-2 bg-dark-lighter hover:bg-dark-bg rounded-lg transition-colors">
+                    <i class="fas fa-copy mr-2"></i>Copy Code
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-6 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Kind <span class="gradient-text">Words</span>
+                </h2>
+                <p class="text-gray-400 text-lg">What colleagues and clients say about my work</p>
+            </div>
+            
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Testimonial 1 -->
+                <div class="gradient-border p-6 card-hover reveal">
+                    <div class="flex items-center mb-4">
+                        <img src="https://i.pravatar.cc/100?img=12" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-400">CTO @ TechCorp</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"John is an exceptional developer. His expertise in MERN stack helped us scale our platform to handle millions of users. Highly recommended!"</p>
+                    <a href="#" class="text-primary text-sm mt-4 inline-block hover:underline">
+                        <i class="fab fa-linkedin mr-1"></i>View on LinkedIn
+                    </a>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="gradient-border p-6 card-hover reveal">
+                    <div class="flex items-center mb-4">
+                        <img src="https://i.pravatar.cc/100?img=33" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <p class="text-sm text-gray-400">Founder @ StartupXYZ</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"Working with John was a game-changer. He delivered our MVP in record time with clean, maintainable code. A true professional!"</p>
+                    <a href="#" class="text-primary text-sm mt-4 inline-block hover:underline">
+                        <i class="fab fa-linkedin mr-1"></i>View on LinkedIn
+                    </a>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="gradient-border p-6 card-hover reveal">
+                    <div class="flex items-center mb-4">
+                        <img src="https://i.pravatar.cc/100?img=47" alt="Client" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-400">Product Manager</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"John's attention to detail and problem-solving skills are outstanding. He consistently delivers high-quality work and is great to collaborate with."</p>
+                    <a href="#" class="text-primary text-sm mt-4 inline-block hover:underline">
+                        <i class="fab fa-linkedin mr-1"></i>View on LinkedIn
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                    Let's Build Something <span class="gradient-text">Together</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Have a project in mind? Let's talk!</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Contact Form -->
+                <div class="reveal">
+                    <form class="space-y-6" id="contactForm">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Your Name</label>
+                            <input type="text" 
+                                   class="w-full px-4 py-3 bg-dark-card border border-gray-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" 
+                                   placeholder="John Doe"
+                                   required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email Address</label>
+                            <input type="email" 
+                                   class="w-full px-4 py-3 bg-dark-card border border-gray-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" 
+                                   placeholder="john@example.com"
+                                   required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Subject</label>
+                            <input type="text" 
+                                   class="w-full px-4 py-3 bg-dark-card border border-gray-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all" 
+                                   placeholder="Project Inquiry"
+                                   required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Message</label>
+                            <textarea rows="5" 
+                                      class="w-full px-4 py-3 bg-dark-card border border-gray-700 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none" 
+                                      placeholder="Tell me about your project..."
+                                      required></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="w-full px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-lg font-semibold hover:shadow-xl hover:shadow-primary/50 transition-all transform hover:scale-105">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info & Social Links -->
+                <div class="reveal">
+                    <div class="glass p-8 rounded-2xl mb-8">
+                        <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Email</p>
+                                    <a href="mailto:john@example.com" class="hover:text-primary transition-colors">john@example.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Phone</p>
+                                    <a href="tel:+1234567890" class="hover:text-primary transition-colors">+1 (234) 567-890</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Location</p>
+                                    <p>San Francisco, CA</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Availability Status -->
+                        <div class="p-4 bg-dark-card rounded-lg border border-green-500/30 mb-8">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                                <span class="font-semibold text-green-400">Available for Freelance Work</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Connect With Me</h4>
+                            <div class="flex gap-4">
+                                <a href="#" class="w-12 h-12 glass hover:bg-dark-lighter rounded-full flex items-center justify-center hover:text-primary transition-all hover:scale-110">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 glass hover:bg-dark-lighter rounded-full flex items-center justify-center hover:text-primary transition-all hover:scale-110">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 glass hover:bg-dark-lighter rounded-full flex items-center justify-center hover:text-primary transition-all hover:scale-110">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 glass hover:bg-dark-lighter rounded-full flex items-center justify-center hover:text-primary transition-all hover:scale-110">
+                                    <i class="fab fa-dribbble text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 glass hover:bg-dark-lighter rounded-full flex items-center justify-center hover:text-primary transition-all hover:scale-110">
+                                    <i class="fab fa-dev text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass p-4 rounded-lg text-center">
+                            <h4 class="text-3xl font-bold gradient-text">4+</h4>
+                            <p class="text-sm text-gray-400">Years Experience</p>
+                        </div>
+                        <div class="glass p-4 rounded-lg text-center">
+                            <h4 class="text-3xl font-bold gradient-text">50+</h4>
+                            <p class="text-sm text-gray-400">Projects Done</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-dark-card border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                
+                <!-- About -->
+                <div>
+                    <h3 class="text-2xl font-display font-bold gradient-text mb-4">&lt;JD/&gt;</h3>
+                    <p class="text-gray-400 mb-4">Building exceptional digital experiences with modern web technologies.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#projects" class="hover:text-primary transition-colors">Projects</a></li>
+                        <li><a href="#skills" class="hover:text-primary transition-colors">Skills</a></li>
+                        <li><a href="#experience" class="hover:text-primary transition-colors">Experience</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-check text-primary mr-2"></i>Web Development</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i>API Development</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i>Database Design</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i>Code Review</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i>Technical Consulting</li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">
+                    Built with <span class="text-red-500">❤️</span> using HTML & Tailwind CSS
+                </p>
+                <p class="text-gray-500 mt-2">
+                    © 2024 John Doe. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all opacity-0 pointer-events-none z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- JavaScript -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const progressBar = document.getElementById('progressBar');
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+        
+        // Particles generation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 5 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Reveal on scroll animation
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        reveals.forEach(reveal => {
+            revealObserver.observe(reveal);
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = '1';
+                backToTopBtn.style.pointerEvents = 'auto';
+            } else {
+                backToTopBtn.style.opacity = '0';
+                backToTopBtn.style.pointerEvents = 'none';
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+        
+        // Typewriter effect
+        const text = "MERN Stack Developer";
+        const typewriterElement = document.getElementById('typewriter');
+        let index = 0;
+        
+        function typeWriter() {
+            if (index < text.length) {
+                typewriterElement.textContent = text.substring(0, index + 1);
+                index++;
+                setTimeout(typeWriter, 150);
+            } else {
+                setTimeout(() => {
+                    index = 0;
+                    typeWriter();
+                }, 2000);
+            }
+        }
+        
+        // Start typewriter after page load
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 500);
+        });
+        
+        // Console easter egg
+        console.log('%c👋 Hello there!', 'font-size: 20px; font-weight: bold; color: #6366F1;');
+        console.log('%cLooking for something? Check out my GitHub!', 'font-size: 14px; color: #8B5CF6;');
+        console.log('%chttps://github.com/johndoe', 'font-size: 12px; color: #EC4899;');
+        
+    </script>
+    
+</body>
+</html>
